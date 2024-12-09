@@ -46,7 +46,7 @@ body {
   margin: 0px 0px 0px 48px;
 }
 
-#artist {
+#artist-img {
   width: 230px;
   height: 230px;
   border-radius: 5px;
@@ -83,7 +83,7 @@ body {
   margin: 40px 39px 0px 39px;
 }
 
-.duration {
+.music-timer {
   display: flex;
   justify-content: space-between;
   font-weight: 300;
@@ -93,57 +93,35 @@ body {
 
 .seek-bar-container {
   align-items: center;
-  justify-items: center;
+  width: 100%;
+  height: 5px;
+  margin-top: 10px;
+  background: #ffffff80;
+  border-radius: 50px;
+  outline: none;
+  position: relative;
 }
 
 #seek-bar {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 5px; /* Adjust height */
-  background: #ffffff80; /* White background for the track */
-  border-radius: 50px; /* Rounded corners */
+  width: 0%;
+  height: 5px;
+  margin-top: 10px;
+  background: #632964;
+  border-radius: 50px;
   outline: none;
 }
 
-/* Style the filled part of the track */
-#seek-bar::-webkit-slider-runnable-track {
-  background: linear-gradient(to right, #632964 var(--value), #fff 0%);
-  border-radius: 5px;
-  height: 5px;
-}
-
-#seek-bar::-moz-range-progress {
-  background: #632964; /* Progress color for Firefox */
-  border-radius: 5px;
-}
-
-#seek-bar::-moz-range-track {
-  background: #ffffff80; /* White background for unfilled part */
-  border-radius: 5px;
-}
-
-/* Style the thumb */
-#seek-bar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
+#seek-eclipse {
   width: 22px;
   height: 22px;
   background: #ffffff;
   border: 5px solid #632964;
   border-radius: 50%;
   cursor: pointer;
-  translate: 0px -9px;
-}
-
-#seek-bar::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  background: #ffffff;
-  border: 5px solid #632964;
-  border-radius: 50%;
-  cursor: pointer;
-  translate: 0px -9px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transform: translate(-9px, -9px);
 }
 
 .player-btns {
@@ -153,20 +131,20 @@ body {
   margin: 30px 39px 0px 39px;
 }
 
-#previous {
+#previous-btn {
   color: #93375bcc;
   font-size: 55px;
   cursor: pointer;
 }
-#previous:hover {
+#previous-btn:hover {
   color: #7a2e4bcc;
 }
-#next {
+#next-btn {
   color: #93375bcc;
   font-size: 55px;
   cursor: pointer;
 }
-#next:hover {
+#next-btn:hover {
   color: #7a2e4bcc;
 }
 #play-btn {
@@ -183,5 +161,5 @@ body {
 }
 
 #play-btn:hover {
-  background: #4d1c46;
+  background: #96385a;
 }

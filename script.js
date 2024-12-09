@@ -1,41 +1,87 @@
+const playBtn = document.getElementById("play-btn");
+const previousBtn = document.getElementById("previous-btn");
+const nextBtn = document.getElementById("next-btn");
+const artistImg = document.getElementById("artist-img");
+const title = document.getElementById("title");
+const artistName = document.getElementById("artist-name");
+const playIcon = document.querySelector(".fa-play");
+const seekBarContainer = document.getElementById("seek-bar-container");
 const seekBar = document.getElementById("seek-bar");
-const song = document.getElementById("song");
-const playIcon = document.getElementById("play-icon");
+const seekEclipse = document.getElementById("seek-eclipse");
 const startTime = document.getElementById("start-time");
 const endTime = document.getElementById("end-time");
 
-song.onloadedmetadata = function () {
-  seekBar.max = song.duration;
-  seekBar.value = (song.currentTime / song.duration) * 100;
-};
+const track = [
+  {
+    name: "All Too Well (Taylor's Version)",
+    artist: "Taylor Swift",
+    image: "./assets/artist.jpg",
+    source:
+      "./music/Taylor Swift - All Too Well (Taylor's Version) (Lyric Video).mp3",
+  },
+];
 
-// startTime = song.currentTime;
-// endTime = song.duration;
-function songPlayPause() {
-  if (playIcon.classList.contains("fa-pause")) {
-    song.pause();
-    playIcon.classList.remove("fa-pause");
-    playIcon.classList.add("fa-play");
+// Initial values
+let audio = null;
+let barWidth = null;
+let duration = null;
+let currentTime = null;
+let isTimerPlaying = false;
+let currentTrackIndex = 0;
+let currentTrack = track[0];
+
+// Set values
+audio = new Audio();
+audio.src = currentTrack.source;
+artistImg.src = currentTrack.image;
+title.innerText = currentTrack.name;
+artistName.innerText = currentTrack.artist;
+
+// functions
+
+// Play button
+playBtn.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+    isTimerPlaying = true;
   } else {
-    song.play();
-    playIcon.classList.add("fa-pause");
-    playIcon.classList.remove("fa-play");
+    audio.pause();
+    isTimerPlaying = false;
   }
-}
+});
 
-if (song.play()) {
-  setInterval(() => {
-    const progress = (song.currentTime / song.duration) * 100;
-    seekBar.value = progress;
-    seekBar.style.background = `linear-gradient(to right, #632964 ${progress}%, #ffffff80 ${progress}%)`;
-  }, 100);
-  playIcon.classList.add("fa-pause");
-  playIcon.classList.remove("fa-play");
-}
+// Dynamic Play Button, Song Time and Seekbar
+audio.ontimeupdate = function () {
+  if (audio.duration) {
+    barWidth = (100 / audio.duration) * audio.currentTime;
 
-seekBar.onchange = function () {
-  song.play();
-  song.currentTime = seekBar.value;
-  playIcon.classList.add("fa-pause");
-  playIcon.classList.remove("fa-play");
+    let durationMinutes = Math.floor(audio.duration / 60);
+    let durationSeconds = Math.floor(audio.duration - durationMinutes * 60);
+    let currentMinutes = Math.floor(audio.currentTime / 60);
+    let currentSeconds = Math.floor(audio.currentTime - currentMinutes * 60);
+
+    if (durationMinutes < 10) durationMinutes = "0" + durationMinutes;
+
+    if (durationSeconds < 10) durationSeconds = "0" + durationSeconds;
+
+    if (currentMinutes < 10) currentMinutes = "0" + currentMinutes;
+
+    if (currentSeconds < 10) currentSeconds = "0" + currentSeconds;
+
+    duration = durationMinutes + ":" + durationSeconds;
+    currentTime = currentMinutes + ":" + currentSeconds;
+
+    seekBar.style.width = `${barWidth}%`;
+    seekEclipse.style.setProperty("left", `${barWidth}%`);
+    startTime.innerText = `${currentTime}`;
+    endTime.innerText = `${duration}`;
+
+    if (isTimerPlaying) {
+      playIcon.classList.remove("fa-play");
+      playIcon.classList.add("fa-pause");
+    } else {
+      playIcon.classList.add("fa-play");
+      playIcon.classList.remove("fa-pause");
+    }
+  }
 };
