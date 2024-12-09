@@ -11,15 +11,10 @@ const seekEclipse = document.getElementById("seek-eclipse");
 const startTime = document.getElementById("start-time");
 const endTime = document.getElementById("end-time");
 
-const track = [
-  {
-    name: "All Too Well (Taylor's Version)",
-    artist: "Taylor Swift",
-    image: "./assets/artist.jpg",
-    source:
-      "./music/Taylor Swift - All Too Well (Taylor's Version) (Lyric Video).mp3",
-  },
-];
+const track = {
+  source:
+    "./music/Taylor Swift - All Too Well (Taylor's Version) (Lyric Video).mp3",
+};
 
 // Initial values
 let audio = null;
@@ -27,17 +22,10 @@ let barWidth = null;
 let duration = null;
 let currentTime = null;
 let isTimerPlaying = false;
-let currentTrackIndex = 0;
-let currentTrack = track[0];
 
 // Set values
 audio = new Audio();
-audio.src = currentTrack.source;
-artistImg.src = currentTrack.image;
-title.innerText = currentTrack.name;
-artistName.innerText = currentTrack.artist;
-
-// functions
+audio.src = track.source;
 
 // Play button
 playBtn.addEventListener("click", () => {
