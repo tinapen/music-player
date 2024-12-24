@@ -13,7 +13,7 @@ const endTime = document.getElementById("end-time");
 
 const track = {
   source:
-    "./music/Taylor Swift - All Too Well (Taylor's Version) (Lyric Video).mp3",
+    "./music/Taylor-Swift-All-Too-Well_(Taylor's-Version)_(Lyric-Video).mp3",
 };
 
 // Initial values
