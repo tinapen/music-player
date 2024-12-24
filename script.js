@@ -5,7 +5,7 @@ const artistImg = document.getElementById("artist-img");
 const title = document.getElementById("title");
 const artistName = document.getElementById("artist-name");
 const playIcon = document.querySelector(".fa-play");
-const seekBarContainer = document.getElementById("seek-bar-container");
+const seekBarContainer = document.querySelector(".seek-bar-container");
 const seekBar = document.getElementById("seek-bar");
 const seekEclipse = document.getElementById("seek-eclipse");
 const startTime = document.getElementById("start-time");
@@ -38,6 +38,11 @@ playBtn.addEventListener("click", () => {
   }
 });
 
+seekBar.addEventListener("click", (e) => {
+  const scrubTime = (e.offsetX / seekBar.offsetWidth) * audio.duration;
+  audio.currentTime = scrubTime;
+});
+
 // Dynamic Play Button, Song Time and Seekbar
 audio.ontimeupdate = function () {
   if (audio.duration) {
@@ -68,8 +73,21 @@ audio.ontimeupdate = function () {
       playIcon.classList.remove("fa-play");
       playIcon.classList.add("fa-pause");
     } else {
-      playIcon.classList.add("fa-play");
       playIcon.classList.remove("fa-pause");
+      playIcon.classList.add("fa-play");
     }
   }
 };
+
+seekBarContainer.addEventListener("click", (x) => {
+  let maxduration = audio.duration;
+  let position = x.offsetX - seekBarContainer.offsetLeft;
+  let percentage = (100 * position) / seekBarContainer.offsetWidth;
+  if (percentage > 100) percentage = 100;
+  if (percentage < 0) percentage = 0;
+  barWidth = percentage + "%";
+
+  audio.currentTime = (maxduration * percentage) / 100;
+  seekBar.style.width = `${barWidth}%`;
+  seekEclipse.style.setProperty("left", `${barWidth}%`);
+});
