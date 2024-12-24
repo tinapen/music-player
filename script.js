@@ -35,7 +35,7 @@ function updateSeekBar() {
     isPlaying = false;
     currentTime = 0; // Reset for replay
     startTimeDisplay.textContent = formatTime(currentTime); // Reset time display
-    seekBar.style.background = `linear-gradient(to right, #632964 0%, #ffffff 0%)`;
+    seekBar.style.background = `linear-gradient(to right, #632964 100%, #ffffff 0%)`;
   }
 }
 
